@@ -1,0 +1,61 @@
+ vector<string> letterCombinations(string digits) 
+    {
+        vector<string>res;
+        int n = digits.size();
+        if(n==0) return res;
+        
+        string s;
+        
+        string trans[] = {"", " ", "abc", "def", "ghi", "jkl",  "mno", "pqrs", "tuv", "wxyz"}; 
+        
+        dfs(0,n,digits,s,res,trans);
+        
+        return res;
+  
+    }
+    
+    string convert(int num)
+    {
+        string letter;
+        
+        switch(num)
+        {
+            case 1: letter = ""; break;
+            case 2: letter = "abc";break;
+            case 3: letter = "def"; break;
+            case 4: letter = "ghi";break;
+            case 5: letter = "jkl"; break;
+            case 6: letter = "mno";break;
+            case 7: letter = "pqrs"; break;
+            case 8: letter = "tuv";break;
+            case 9: letter = "wxyz"; break;
+            case 0: letter = "";break;
+            
+            default: letter = "";   
+        }
+        
+        return letter;
+    }
+    
+    void dfs(int index, int n, string &digits,string &s, vector<string>& res, string trans[])
+    {
+        if(index==n)
+        {
+            res.push_back(s);
+            return;
+        }
+        
+         int num = digits[index]-'0';
+         
+         string letter=convert(num);
+         // letter=trans[num];
+
+         int size = letter.size();
+         
+         for(int i=0;i<size;i++)
+         {
+            s.push_back(letter[i]);
+            dfs(index+1,n,digits,s,res,trans);
+            s.pop_back();
+         }
+        
