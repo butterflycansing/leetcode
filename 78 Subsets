@@ -1,0 +1,61 @@
+  vector<vector<int> > subsets(vector<int> &S) 
+    {
+        
+        vector<vector<int>>res;
+        int n = S.size();
+        if(n==0) return res;
+        
+        sort(S.begin(),S.end());
+        
+        vector<int> subset;
+        res.push_back(subset);
+              
+              
+       //bit manipulation
+
+      unsigned long long bit = 1, bitmax = (1<<n);
+
+      while(bit < bitmax)
+      {
+          subset.clear();    
+          unsigned long long curBit = bit;
+          for(int i = 0; i < n; i++)
+          {
+              if(curBit & 1)
+                  subset.push_back(S[i]);
+              curBit >>= 1;
+          }
+          res.push_back(subset);
+          bit++;
+      }
+      return res; 
+
+        //backtracking
+        
+       for( int setsize =1;setsize<=n;setsize++ )
+         dfs(S,subset,res,setsize,0);
+         
+       return res;
+        
+    }
+    
+    void dfs(vector<int>&S,vector<int> &subset,vector<vector<int>>&res,int setsize,int level)
+    {
+        if(level ==setsize)
+        {
+            res.push_back(subset);
+            return;
+        }
+        
+        for( int i = level;i<S.size();i++)
+        {
+            if(i>0&&S[i]==S[i-1])
+              continue;
+              
+            subset.push_back(S[i]);
+             dfs(S,subset,res,setsize,i+1);
+            subset.pop_back();
+            
+        }
+        
+    }
