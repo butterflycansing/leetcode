@@ -1,0 +1,32 @@
+ListNode *removeNthFromEnd(ListNode *head, int n)
+    {
+        
+        ListNode * newhead = new ListNode (0);
+        ListNode * p1=newhead, *p2=newhead;
+        newhead->next = head;
+        
+        int counter=0;
+        while(counter<n)
+        {
+            p2=p2->next;
+            counter++;
+        }
+        
+        while(p2->next!=NULL)
+        {
+            p2=p2->next;
+            p1=p1->next;
+        }
+        
+        // now p1 points to the previous node of the node that needs to be deleted
+        p1->next = p1->next->next;
+        
+        p2 = newhead;
+        delete [] p2;
+        
+        newhead = newhead->next;
+        
+        return newhead;
+        
+        
+    }
