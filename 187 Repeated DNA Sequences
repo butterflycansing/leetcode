@@ -1,0 +1,25 @@
+ vector<string> findRepeatedDnaSequences(string s) 
+    {
+        //https://oj.leetcode.com/discuss/24478/i-did-it-in-10-lines-of-c
+        unordered_map<int, int> m;
+        vector<string> r;
+
+        int i = 0;
+        
+        int t = 0;
+    
+       while (i < s.size())
+       {
+          t = (t << 3 | s[i] & 7) & 0x3FFFFFFF ;    // 0x3FFFFFFF = 0o7777777777
+     
+          m[t]++;
+          
+          if(m[t]==2)  // equals to 2 but not bigger than 2. to avoid repetitive strings.
+            r.push_back(s.substr(i-9,10));
+            
+           i++;
+       }
+      
+       return r;
+       
+    }
