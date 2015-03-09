@@ -1,1 +1,50 @@
-1
+int singleNumber(int A[], int n) 
+    {
+        
+        //bit manipulation
+       
+        int result = 0;
+
+        int count[32] = {0};  // each bit
+        
+        for (int i = 0; i < 32; i++) 
+        {
+             for (int j = 0; j < n; j++)  // every number in the array
+             {
+                 if ((A[j] >> i) & 1) 
+                 {
+                     count[i]++;
+                 }
+             }
+         }
+         
+        for (int i = 0; i < 32; i++) 
+        {
+         result = result | ((count[i] % 3) << i);
+        }
+        
+          return result;
+        
+        
+        
+        
+        //hash table
+        /*
+        unordered_map<int,int> myhash;
+        for(int i = 0;i<n;i++)
+        {
+            if(myhash.find(A[i])==myhash.end())
+              myhash.insert({A[i],1});
+            else
+              myhash[A[i]]++;
+           
+        }
+        
+        for(int i = 0;i<n;i++)
+        {
+           if(myhash[A[i]]!=3)
+             return A[i];
+        }
+        */
+        
+    }
