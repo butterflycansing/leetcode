@@ -1,0 +1,124 @@
+ vector<vector<string>> findLadders(string start, string end, unordered_set<string> &dict) 
+    {
+        vector<vector<string>>res;
+        
+        if(end.size()!=start.size())
+          return res;
+        
+         if(end==start)
+         {  
+             vector<string> p (1,start);
+             res.push_back(p);
+             return res;
+         }
+        
+        
+        unordered_map<string,vector<string> > parent;
+
+        unordered_set<string>visited;
+        visited.insert(start);
+        unordered_set<string>visitedlevel;
+
+        unordered_set<string>curlevel;
+        curlevel.insert(start);
+        unordered_set<string> nextlevel;
+
+        
+        bool find = false;
+   
+        while(true)
+        {   
+           nextlevel.clear();
+           visitedlevel.clear();
+
+
+          for(auto it = curlevel.begin();it!=curlevel.end();it++ )
+          {
+ 
+            string w = *it;
+            
+            if(w==end)
+            {
+                 find=true;
+                 break;
+            }
+                
+                for( int i = 0;i<w.size();i++)
+                {
+                 string word = w;
+                
+                for(char c='a';c<='z';c++)
+                {
+                    if(c==w[i])
+                      continue;
+                      
+                   word[i] = c;
+                   
+                    if( dict.find(word)!=dict.end() && visited.find(word)==visited.end() )
+                    {
+                       nextlevel.insert(word);  // if exists already, won't insert
+                       
+                       parent[word].push_back(w);
+                       
+                       visitedlevel.insert(word);  
+
+                    }
+                         
+                 }//end for c
+                }//end for i
+          
+          }
+       
+           
+          if(nextlevel.empty())
+             break;
+             
+          curlevel.swap(nextlevel);
+          nextlevel.clear();
+          
+          for( auto ita = visitedlevel.begin();ita!=visitedlevel.end();ita++)
+              visited.insert(*ita);
+              
+          visitedlevel.clear();
+          
+        }
+       
+       if(find)
+        {
+          vector<string>path;
+          
+          generatepath(path,parent,res,start,end);
+            
+          return res;
+            
+        }
+       else
+         return res;
+       
+    } 
+    
+    void generatepath(vector<string>&path, unordered_map<string,vector<string> > &parent, vector<vector<string>> &res,
+                      string start, string word)
+    {
+        path.push_back(word);
+        
+        if(word==start)
+        {
+            res.push_back(path);
+            reverse(res.back().begin(),res.back().end());
+        }
+        else
+        {
+            for( auto it = parent[word].begin();it!=parent[word].end();it++ )
+            {
+                generatepath(path,parent,res,start,*it);
+            }
+            
+        }
+        
+        path.pop_back();
+        
+        return;
+        
+    }
+      
