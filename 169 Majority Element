@@ -1,0 +1,61 @@
+ int majorityElement(vector<int> &num) 
+    {
+        //bit manipulation. code not simplified for readability
+        int countsPerBit[32];
+        int result = 0;
+        for (int i=0; i<32; i++)
+        {
+            int countone = 0;
+            int countzero = 0;
+            
+            for (int j=0; j<num.size(); j++) 
+            {
+                if((num[j]>>i&1) ==1) 
+                    countone++;
+                else 
+                  countzero++;
+            }
+            
+            if (countone>=countzero) 
+                result |= (1<<i);
+            else 
+                result |= (0<<i);
+        }
+        return result;
+        
+        //Moore’s Voting Algorithm. O(n)
+        /*
+        int maj=num[0];
+        int count = 1;
+        
+        for( int i=1;i<num.size();i++)
+        {
+            if(count==0)
+             maj = num[i];
+             
+            if(num[i]==maj)
+            {
+                count++;
+            }
+            else
+            {
+                count--;
+            }
+            
+        }
+        
+        
+        count=0;
+        for( int i=0;i<num.size();i++)
+        {
+            if(num[i]==maj)
+             count++;
+        }
+    }
+        
+        if(count>num.size()/2)
+           return maj;
+        else 
+           return -1;
+        */
+        
