@@ -1,5 +1,6 @@
 int singleNumber(int A[], int n)
     {
+        // bit manipulation
         int res=A[0];
         
         for(int i =1;i<n;i++)
@@ -9,4 +10,23 @@ int singleNumber(int A[], int n)
         
         return res;
         
-    }
+        
+        
+        // hash table
+        /*
+        unordered_map<int,int> myhash;
+        for(int i = 0;i<n;i++)
+        {
+            if(myhash.find(A[i])==myhash.end())
+              myhash.insert({A[i],1});
+            else
+              myhash[A[i]]++;
+           
+        }
+        
+        for(int i = 0;i<n;i++)
+        {
+           if(myhash[A[i]]!=2)
+             return A[i];
+        }
+        */
