@@ -1,1 +1,99 @@
-
+ UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node)
+    {
+        //depth first search
+        
+        if(node==NULL) return NULL;
+        
+        unordered_map<UndirectedGraphNode*,UndirectedGraphNode*> mymap;  // from old graph node to new graph node 
+        
+        stack<UndirectedGraphNode*> mystack;
+        
+        UndirectedGraphNode* copynode = new UndirectedGraphNode(node->label);
+        
+        mymap[node]=copynode;
+        
+        mystack.push(node);
+        
+        while(! mystack.empty())
+        {
+            UndirectedGraphNode* curnode = mystack.top();
+            mystack.pop();
+            
+            for( int i =0;i<curnode->neighbors.size();i++)
+            {
+                UndirectedGraphNode* neighbornode = curnode->neighbors[i];
+               
+                if(mymap.find(neighbornode)==mymap.end())
+                {
+                    UndirectedGraphNode* copyneighbornode = new UndirectedGraphNode (neighbornode->label);
+                    
+                    mymap[curnode]->neighbors.push_back(copyneighbornode);
+                    
+                    mymap[neighbornode]=copyneighbornode;
+                    
+                    mystack.push(neighbornode);
+                    
+                }
+                else
+                {
+                     mymap[curnode]->neighbors.push_back(mymap[neighbornode]);
+                }
+                
+            }
+        }
+        
+        return copynode;
+        
+        
+        
+        //breath first search
+        /*
+        if(node==NULL) return NULL;
+        
+        unordered_map<UndirectedGraphNode*,UndirectedGraphNode*> mymap;  // from old graph node to new graph node 
+        
+        queue<UndirectedGraphNode*> myqueue;
+        
+        UndirectedGraphNode* copynode = new UndirectedGraphNode(node->label);
+        
+        mymap[node]=copynode;
+        
+        myqueue.push(node);
+        
+        while(!myqueue.empty())
+        {
+            UndirectedGraphNode* curnode = myqueue.front();  // for the first iteration, copynode has been copied. 
+            myqueue.pop();
+            
+            for( int i =0;i<curnode->neighbors.size();i++)
+            {
+                UndirectedGraphNode* neighbornode = curnode->neighbors[i];
+                
+                if(mymap.find(neighbornode)==mymap.end() )
+                {
+                    UndirectedGraphNode* copyneighbornode = new UndirectedGraphNode (neighbornode->label);
+                    
+                    mymap[curnode]->neighbors.push_back(copyneighbornode);
+                    
+                    mymap[neighbornode]=copyneighbornode;
+                    
+                    myqueue.push(neighbornode);
+                    
+                }
+                else
+                {
+                    mymap[curnode]->neighbors.push_back( mymap[neighbornode]);
+                    
+                }
+            
+            }
+            
+            
+            
+        }
+        
+        
+        return copynode;
+        */
+        
+    }
