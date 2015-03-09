@@ -1,0 +1,66 @@
+ int ladderLength(string start, string end, unordered_set<string> &dict) 
+    {
+        if(end==start)
+         return 0;
+         
+        if(end.size()!=start.size())
+          return 0;
+         
+        queue <string> myqueue;
+        myqueue.push(start);
+        
+        unordered_map<string,bool> mymap;
+        mymap[start]=true;
+        
+        int level=1;
+        
+        while(true)
+        {
+            queue<string> q;
+            
+            while(!myqueue.empty())
+            {
+                string w = myqueue.front();
+                myqueue.pop();
+                
+              for( int i = 0;i<w.size();i++)
+              {
+                string word = w;
+                
+                for(char c='a';c<='z';c++)
+                {
+                    if(c==w[i])
+                      continue;
+                      
+                   word[i] = c;
+                   
+                    if(dict.find(word)!=dict.end())
+                    {
+                        if(word==end)
+                            return level+1;
+                        else
+                        {
+                         if(mymap.find(word)==mymap.end())
+                          {
+                            q.push(word);
+                            mymap[word]=true;
+                            
+                          }
+                         }
+                    } // end if
+                }//end for c
+              }//end for i
+            } // end while q
+            
+            if(q.empty())
+             return 0;
+             
+            myqueue.swap(q);
+            level++;
+           
+   
+        }
+        
+        return level;
+    }
+    
