@@ -1,0 +1,30 @@
+ vector<vector<int> > levelOrderBottom(TreeNode *root)
+    {
+        //bfs recursion version
+        
+        vector<vector<int>> res;
+
+        traverse(root, 1, res);
+
+        reverse(res.begin(),res.end() );
+        
+        return res;
+        
+    }
+    
+    void traverse(TreeNode *node, int level, vector<vector<int>> &res)
+    {
+    
+        if (node==NULL)
+            return;
+   
+        if (level>res.size())
+            res.push_back(vector<int>());
+    
+        res[level-1].push_back(node->val);
+    
+        traverse(node->left, level+1, res);
+    
+        traverse(node->right, level+1, res);
+    
+    }
