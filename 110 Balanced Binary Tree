@@ -1,0 +1,23 @@
+ bool isBalanced(TreeNode *root) 
+    {
+        if (root==NULL) 
+          return true;
+          
+        if( isBalanced(root->left) && isBalanced(root->right) )
+        {
+          int dif = maxDepth(root->left) - maxDepth(root->right);
+          if (abs(dif)<=1)
+             return true;
+          else
+             return false;
+        }
+        else
+          return false;
+    }
+    
+     int maxDepth(TreeNode * node)
+     {
+        if (node==NULL) 
+           return 0;
+        return max(maxDepth(node->left),maxDepth(node->right))+1;
+    }
