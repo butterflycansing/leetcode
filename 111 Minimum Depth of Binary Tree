@@ -1,0 +1,33 @@
+  int minDepth(TreeNode *root)
+    {
+        if(root==NULL)
+          return 0;
+          
+        return findmindepth(root);
+        
+    }
+    
+     int findmindepth(TreeNode*node)
+     {
+         if(node->left==NULL&&node->right==NULL)
+          return 1;
+         
+         int leftmindepth = 0;
+         int rightmindepth = 0;
+
+         if(node->left==NULL&&node->right!=NULL)
+         {  rightmindepth = findmindepth(node->right)+1;
+            return rightmindepth;
+         }
+             
+         if(node->left!=NULL&&node->right==NULL)
+         {  leftmindepth = findmindepth(node->left)+1;
+            return leftmindepth;
+         }
+          
+          leftmindepth = findmindepth(node->left)+1;
+          rightmindepth = findmindepth(node->right)+1;
+          
+          return min(leftmindepth,rightmindepth);
+
+     }
