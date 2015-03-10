@@ -1,0 +1,18 @@
+ int maxDepth(TreeNode *root) 
+    {
+        if(root==NULL)
+          return 0;
+          
+        return findmaxdepth(root);
+    }
+    
+    int findmaxdepth(TreeNode *node)
+    {
+        if(node==NULL)
+          return 0;
+        
+        int leftmaxdepth = findmaxdepth(node->left);
+        int rightmaxdepth= findmaxdepth(node->right);
+        
+        return max(leftmaxdepth,rightmaxdepth)+1;
+    }
