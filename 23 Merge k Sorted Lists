@@ -1,0 +1,51 @@
+ ListNode *mergeKLists(vector<ListNode *> &lists)
+    {
+        int n= lists.size();
+         if(n==0)
+            return NULL;
+         
+         // heap.  O(nlogn)
+         
+        priority_queue<ListNode*,vector<ListNode*>,mycomp>myheap;  // priority_queue pops the largest element. so need to implement mycompare.
+        
+        for(int i=0;i<n;i++)
+        {
+            if(lists[i]!=NULL)
+             myheap.push(lists[i]);
+        }
+        
+        ListNode* p = new ListNode(0);
+        ListNode* newhead = p;
+        
+        while(!myheap.empty())
+        {
+            ListNode * node = myheap.top();
+            myheap.pop();
+            
+            p->next = node;
+            p = node;
+            
+            if(node->next!=NULL)
+              myheap.push(node->next);
+        }
+        
+        p->next=NULL;
+        
+        p=newhead;
+        newhead = newhead->next;
+        delete []p;
+        
+        return newhead;
+        
+    }
+    
+    struct mycomp
+    {
+     bool operator()(ListNode*p1,ListNode*p2) // priority_queue pops the largest element. so need to implement mycompare.
+        {
+            if(p1->val < p2->val)
+                return false;
+             else
+                return true;
+        }
+    };
