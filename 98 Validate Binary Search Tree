@@ -1,0 +1,70 @@
+  // inorder traversal. node value should obey ascending order 
+    bool isValidBST(TreeNode *root)
+    {
+       if(root==NULL)
+         return true;
+         
+       int curval=INT_MIN;
+    
+       bool set = false;
+    
+       bool valid = true;
+         
+       InOrderTraversal(root,curval,set,valid);
+       
+       return valid;
+        
+    }
+    
+    void InOrderTraversal(TreeNode * node,int & curval,bool&set,bool &valid)
+    {
+        if(node==NULL)
+          return;
+          
+        InOrderTraversal(node->left,curval,set,valid);
+        
+        if(!set&&node->left==NULL)
+            {
+            set=true;
+            curval = node->val;
+            }
+        else
+        {
+          if(set && node->val <= curval)
+          { valid = false;
+            return;
+          }
+          else
+           curval = node->val;
+        }
+     
+         
+         InOrderTraversal(node->right,curval,set,valid);
+         
+         return;
+
+    }
+    
+
+ /* // this method not as good. because assumes minimum value and maximum value in the tree.
+ 
+  bool isValidBST(TreeNode *root)
+    {
+        long int min=LONG_MIN;
+        long int max = LONG_MAX;
+        
+        return interval(root,min,max);
+    }
+    
+    bool interval(TreeNode *node,long int min,long int max)
+    {
+         if(node==NULL)
+          return true;
+          
+        if(node->val <= min || node->val >= max)
+          return false;
+    
+         return interval(node->left,min,node->val) && interval(node->right,node->val,max);
+        
+    }
+    */
