@@ -1,0 +1,93 @@
+ void solve(vector<vector<char>> &board)
+   {        
+        int m = board.size();  
+        if (m==0){return;}
+        int n = board[0].size(); 
+         
+        vector<vector<bool> > visitedzero (m, vector<bool>(n)); 
+         
+        queue<pair<int,int> > myq; 
+         
+        for (int i=0;i<m;i++)
+        {
+            if (board[i][0]=='O')
+            {
+                myq.push(make_pair(i,0));
+                visitedzero[i][0]=true;
+            }
+        }
+        
+           
+        for (int i=0;i<m;i++)
+        {
+            if (board[i][n-1]=='O')
+            {
+                myq.push(make_pair(i,n-1));
+                visitedzero[i][n-1]=true;
+            }
+        }
+        
+        for (int j=0;j<n;j++)
+        {
+            if (board[0][j]=='O')
+            {
+                myq.push(make_pair(0,j));
+                visitedzero[0][j]=true;
+            }
+        }
+         
+        for (int j=0;j<n;j++)
+        {
+            if (board[m-1][j]=='O')
+            {
+                myq.push(make_pair(m-1,j));
+                visitedzero[m-1][j]=true;
+            }
+        }
+        
+         
+        //bfs
+        while (!myq.empty())
+        {
+            //get current live "O"
+            int i = myq.front().first;
+            int j = myq.front().second;
+             
+            myq.pop(); 
+             
+            //search in four directions
+            
+            if (i-1>0 && board[i-1][j]=='O' && visitedzero[i-1][j]==false)
+                {visitedzero[i-1][j]=true;
+                 myq.push(make_pair(i-1,j));
+                } 
+                
+            if (i+1<m-1 && board[i+1][j]=='O'&& visitedzero[i+1][j]==false)
+               {visitedzero[i+1][j]=true; 
+                myq.push(make_pair(i+1,j));
+               } 
+               
+            if (j-1>0 && board[i][j-1]=='O'&& visitedzero[i][j-1]==false)
+               {visitedzero[i][j-1]=true; 
+                myq.push(make_pair(i,j-1));
+               } 
+            if (j+1<n-1 && board[i][j+1]=='O'&& visitedzero[i][j+1]==false)
+               {visitedzero[i][j+1]=true; 
+                 myq.push(make_pair(i,j+1));
+               } 
+        }
+         
+        for (int i=0;i<m;i++)
+        {
+            for (int j=0;j<n;j++)
+            {
+                if (board[i][j]=='O'&&visitedzero[i][j]==false)
+                {
+                    board[i][j]='X';
+                }
+            }
+        }
+         
+        return;
+            
+    }
