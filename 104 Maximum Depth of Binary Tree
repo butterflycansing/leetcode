@@ -11,8 +11,8 @@
         if(node==NULL)
           return 0;
         
-        int leftmaxdepth = findmaxdepth(node->left);
-        int rightmaxdepth= findmaxdepth(node->right);
+        int leftmaxdepth = findmaxdepth(node->left)+1;
+        int rightmaxdepth= findmaxdepth(node->right)+1;
         
-        return max(leftmaxdepth,rightmaxdepth)+1;
+        return max(leftmaxdepth,rightmaxdepth);
     }
