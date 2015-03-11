@@ -1,0 +1,38 @@
+ TreeNode *sortedListToBST(ListNode *head) 
+    {
+        if (head==NULL) 
+          return NULL;
+          
+        ListNode *p=head;
+        int len = 0;
+        while (p!=NULL)
+        {
+            len ++;
+            p = p->next;
+        }
+        
+        TreeNode *root=constructtree(head,1,len);
+        
+        return root;
+    }
+    
+    TreeNode *constructtree ( ListNode* &p,int start, int end)
+    {
+        if (start>end) 
+          return NULL;
+        
+        int m = start + (end-start)/2;
+        
+        TreeNode *left = constructtree ( p,start, m-1);
+        
+        TreeNode * node = new TreeNode(p->val); 
+        
+        p = p->next;
+        
+        TreeNode *right = constructtree ( p,m+1,end);
+        
+        node->left  = left;
+        node->right  = right;
+        
+        return node;
+    }
