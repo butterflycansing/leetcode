@@ -1,0 +1,28 @@
+TreeNode *sortedArrayToBST(vector<int> &num) 
+    {
+       int n = num.size();
+       if(n==0) return NULL;
+       
+       return constructtree(num,0,n-1);
+        
+    }
+    
+    TreeNode *constructtree(vector<int> &num,int start,int end) 
+    {
+        if(start>end)
+         return NULL;
+         
+        if(start==end)
+         {
+             TreeNode * node = new TreeNode(num[start]);
+             return node;
+         }
+         
+        int m = start + (end-start)/2;
+        TreeNode * node = new TreeNode(num[m]);
+        
+        node->left = constructtree(num,start,m-1) ;
+        node->right= constructtree(num,m+1,end);
+        
+        return node;
+    }
