@@ -1,4 +1,73 @@
-  void connect(TreeLinkNode *root) 
+    // non recursion version. use constant extra space
+    void connect(TreeLinkNode *root) 
+    {
+        if(root==NULL)
+          return;
+          
+        root->next = NULL;
+        
+        TreeLinkNode *leftmostchild = root;
+        
+        TreeLinkNode *parent = root;
+        
+        while(leftmostchild) 
+        {
+            parent = leftmostchild;
+            
+            while(parent !=NULL && parent->left==NULL && parent->right==NULL)  // first non null parent node 
+              parent = parent->next;
+              
+            if(parent==NULL) return;
+            
+            leftmostchild = parent->left ? parent->left : parent->right;
+            
+            TreeLinkNode *cur = leftmostchild;
+            
+            while(parent) 
+            {
+                if(cur==parent->left) 
+                {  
+                    if(parent->right) 
+                    {
+                        cur->next = parent->right;
+                        cur = cur->next;
+                    }
+                    parent = parent->next;
+                }
+                else 
+                {
+                    if(cur==parent->right) 
+                    { 
+                      parent = parent->next;
+                    }
+                    else 
+                    {  // cur is the child of the previous parent node
+                        while(parent&&!parent->left && !parent->right)   // find the first parent node that has children to connect
+                        {
+                          parent = parent->next;
+                        } 
+                        
+                        if(parent==NULL)  // no more child node to connet
+                         break;
+                        else
+                        {
+                            cur->next = parent->left ? parent->left : parent->right;    
+                            cur = cur->next;
+                        }
+                        
+                    }
+                } 
+            
+                
+            }// end while parent
+       
+        }//end while leftmostchild
+    
+       return;    
+    }
+
+    /* //recursion version
+    void connect(TreeLinkNode *root) 
     {
         
         if(root==NULL)
@@ -21,15 +90,14 @@
           
         connect(root->left);
         connect(root->right);
+        
     }
-    
-    
- //bfs
- void connect(TreeLinkNode *root) 
+    */
+        /*
+        //bfs
+    void connect(TreeLinkNode *root) 
     {
-        
         if(root==NULL) return ;
-        
         
         queue<TreeLinkNode *> curlevel;
         curlevel.push(root);
@@ -71,3 +139,6 @@
             
         }
         return ;
+    }
+        
+    */
