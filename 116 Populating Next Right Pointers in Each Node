@@ -1,3 +1,30 @@
+  void connect(TreeLinkNode *root) 
+    {
+        
+        if(root==NULL)
+          return;
+        
+        if(root->left==NULL&&root->right==NULL)
+         return;
+        
+        if(root->next==NULL)
+        {
+          root->left->next = root->right;
+          root->right->next= NULL;
+        }
+        
+        if(root->next!=NULL)
+        {
+            root->left->next = root->right;
+            root->right->next = root->next->left;
+        }
+          
+        connect(root->left);
+        connect(root->right);
+    }
+    
+    
+ //bfs
  void connect(TreeLinkNode *root) 
     {
         
