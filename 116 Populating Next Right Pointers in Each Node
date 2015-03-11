@@ -1,0 +1,46 @@
+ void connect(TreeLinkNode *root) 
+    {
+        
+        if(root==NULL) return ;
+        
+        
+        queue<TreeLinkNode *> curlevel;
+        curlevel.push(root);
+        
+        while(true)
+        {
+            queue<TreeLinkNode *> nextlevel;
+            
+             TreeLinkNode * firstnode = curlevel.front();
+             curlevel.pop();
+                
+            if(firstnode->left)
+                  nextlevel.push(firstnode->left);
+            if(firstnode->right)
+                  nextlevel.push(firstnode->right);
+                  
+            TreeLinkNode * prevnode = firstnode;
+
+            while(!curlevel.empty())
+            {
+                TreeLinkNode * node = curlevel.front();
+                curlevel.pop();
+                
+                prevnode->next = node;
+                prevnode = node;
+                
+                if(node->left)
+                  nextlevel.push(node->left);
+                if(node->right)
+                  nextlevel.push(node->right);
+            }
+            
+            prevnode->next =NULL;
+            
+            
+            if(nextlevel.empty())
+              break;
+            curlevel.swap(nextlevel);
+            
+        }
+        return ;
