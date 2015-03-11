@@ -1,0 +1,30 @@
+ void flatten(TreeNode *root) 
+    {
+       // PreOrderTraversal
+       
+       if(root==NULL)
+         return;
+         
+       while(root->left!=NULL||root->right!=NULL)
+        {
+            if(root->left==NULL)
+             {
+                 root=root->right;
+                 continue;
+             }
+             
+            TreeNode * bottomright = root->left;
+            while(bottomright->right!=NULL)
+              bottomright = bottomright->right;
+             
+            bottomright->right = root->right;
+            root->right = root->left;
+            root->left = NULL;
+            
+            root = root->right;
+            
+        }
+        
+        return;
+         
+    }
