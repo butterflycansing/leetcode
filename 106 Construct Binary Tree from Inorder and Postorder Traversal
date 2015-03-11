@@ -1,0 +1,39 @@
+ TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder)
+    {
+        int n = inorder.size();
+        if(n==0)
+          return NULL;
+          
+        return constructtree(inorder,postorder,0,n-1,n-1);
+        
+    }
+    
+    TreeNode * constructtree(vector<int> &inorder, vector<int> &postorder,int startinorder,int endinorder,int endpostorder)
+    {
+        if(startinorder>endinorder)
+          return NULL;
+          
+        int val = postorder[endpostorder];  // root at this level 
+        
+        TreeNode * node = new TreeNode(val);
+        
+        int m = startinorder;
+        for(int i=startinorder;i<=endinorder;i++)  // find the node in inorder traversal
+        {
+            if(inorder[i]==val)
+              {m=i;
+               break;
+              }
+        }
+        
+        int leftend = m-1;
+        int rightstart = m+1;
+        
+        int rightsize = endinorder - m;
+        
+        node->left  = constructtree(inorder,postorder,startinorder,leftend,endpostorder-1-rightsize);
+        
+        node->right = constructtree(inorder,postorder,rightstart,endinorder,endpostorder-1);
+        
+        return node;
+    }
