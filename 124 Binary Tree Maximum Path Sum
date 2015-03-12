@@ -1,0 +1,44 @@
+ int maxPathSum(TreeNode *root) 
+    {
+        if(root==NULL)
+          return 0;
+          
+        int sumaspathnode ; int sumastopnode ; int maxsum=INT_MIN;
+        
+        findmax(root,maxsum);
+        
+        return maxsum;
+        
+    }
+    
+    
+    int findmax(TreeNode *node, int & maxsum)
+    {
+        if(node==NULL)
+          return 0;
+          
+        int value = node->val;
+        
+        int leftmax = findmax(node->left,maxsum);
+        
+        int rightmax = findmax(node->right,maxsum);
+        
+        int sumastopnode=value;
+        
+        if(leftmax>0)
+          sumastopnode = sumastopnode +leftmax ;
+        if(rightmax>0)
+          sumastopnode = sumastopnode + rightmax;
+        
+        if(sumastopnode>maxsum)
+          maxsum = sumastopnode;
+        
+        int sumaspathnode;
+        
+        if(leftmax>0||rightmax>0)
+          sumaspathnode = value + max(leftmax,rightmax);
+        else
+          sumaspathnode = value;
+        
+        return sumaspathnode;
+    }
