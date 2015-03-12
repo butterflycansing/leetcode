@@ -1,0 +1,39 @@
+
+ TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) 
+    {
+        int n = preorder.size();
+        if(n==0)
+          return NULL;
+          
+        return constructtree(preorder,inorder,0,n-1,0);
+        
+    }
+    
+    TreeNode * constructtree(vector<int> &preorder, vector<int> &inorder, int startinorder, int endinorder, int startpreorder )
+    {
+        if(startinorder>endinorder)
+          return NULL;
+         
+        int val = preorder[startpreorder];
+        
+        TreeNode * node = new TreeNode(val);
+        
+        int m = startinorder;
+        for(int i=startinorder;i<=endinorder;i++)
+        {
+            if(inorder[i]==val)
+            {
+                m=i;
+                break;
+            }
+        }
+        
+        int leftsize = m - startinorder ;
+        
+        node->left  = constructtree(preorder,inorder,startinorder,m-1,startpreorder+1);
+        
+        node->right = constructtree(preorder,inorder,m+1,endinorder,startpreorder+1+leftsize);
+        
+        return node;
+ 
+    }
