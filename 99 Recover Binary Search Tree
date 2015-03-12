@@ -1,0 +1,59 @@
+ TreeNode* p=NULL ;
+    TreeNode* p1=NULL, *p2=NULL;
+    int value ;
+    
+    void recoverTree(TreeNode *root) 
+    {
+        if(root==NULL)
+          return ;
+          
+        InOrderTraversal(root);
+          
+        int temp = p1->val;
+        p1->val = p2->val;
+        p2->val = temp;
+        
+        return;
+    }
+    
+    
+    void InOrderTraversal (TreeNode* node)
+    {
+        if(node==NULL)
+         return;
+         
+        InOrderTraversal(node->left);
+        
+        if(p==NULL)
+         { 
+             value = node->val;
+             p = node;
+         }
+         else
+         {
+             if(node->val > value)
+              {
+                  p=node;
+                  value = node->val;
+              }
+              else
+              {
+                  if(p1==NULL)
+                    { p1=p;
+                      p2=node;
+                    }
+                  else
+                    p2=node;
+                
+                 p=node;
+                    
+                 value = node->val;
+              }
+             
+         }
+ 
+        InOrderTraversal(node->right);
+        
+        return;
+
+    }
